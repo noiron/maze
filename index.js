@@ -10,6 +10,7 @@ function delay(ms) {
 }
 
 let count = 1;
+const grid_width = 25;
 
 class Maze {
   constructor({ width, height }) {
@@ -28,7 +29,7 @@ class Maze {
   async walk() {
     let startPos = getRandomInt(this.grids.length);
 
-    while (count < 10000 && this.visited.length <= this.grids.length) {
+    while (count < 100000 && this.visited.length <= this.grids.length) {
       count++;
 
       let neighbors = this.findAllNeighbors(startPos);
@@ -154,40 +155,34 @@ class Maze {
 
     // 横线
     // for (let i = 0; i <= this.height; i++) {
-    //   context.moveTo(0, i * 50);
-    //   context.lineTo(this.width * 50, i * 50);
+    //   context.moveTo(0, i * grid_width);
+    //   context.lineTo(this.width * grid_width, i * grid_width);
     // }
 
-    context.moveTo(0, 0 * 50);
-    context.lineTo(this.width * 50, 0 * 50);
+    context.moveTo(0, 0 * grid_width);
+    context.lineTo(this.width * grid_width, 0 * grid_width);
 
-    context.moveTo(0, this.height * 50);
-    context.lineTo(this.width * 50, this.height * 50);
+    context.moveTo(0, this.height * grid_width);
+    context.lineTo(this.width * grid_width, this.height * grid_width);
 
     // // 纵线
     // for (let i = 0; i <= this.width; i++) {
-    //   context.moveTo(i * 50, 0);
-    //   context.lineTo(i* 50, this.height * 50);
+    //   context.moveTo(i * grid_width, 0);
+    //   context.lineTo(i* grid_width, this.height * grid_width);
     // }
 
-    context.moveTo(0 * 50, 0);
-    context.lineTo(0 * 50, this.height * 50);
+    context.moveTo(0 * grid_width, 0);
+    context.lineTo(0 * grid_width, this.height * grid_width);
 
-    context.moveTo(this.width * 50, 0);
-    context.lineTo(this.width * 50, this.height * 50);
+    context.moveTo(this.width * grid_width, 0);
+    context.lineTo(this.width * grid_width, this.height * grid_width);
 
     context.stroke();
     context.closePath();
 
-    // context.beginPath();
-    // context.sa
     for (let i = 0; i < this.grids.length; i++) {
 
-      // context.moveTo()
       const pos = this.getPos(i);
-
-      // context.moveTo(pos[0], pos[1]);
-      // console.log(this.grids[i], this.grids[i] & 1);
 
       // 上方通行
       context.beginPath();
@@ -198,7 +193,7 @@ class Maze {
       }
 
       context.moveTo(pos[0], pos[1]);
-      context.lineTo(pos[0] + 50, pos[1]);
+      context.lineTo(pos[0] + grid_width, pos[1]);
       context.stroke();
       context.closePath();
 
@@ -210,8 +205,8 @@ class Maze {
       } else {
         context.strokeStyle = '#000';
       }
-      context.moveTo(pos[0] + 50, pos[1]);
-      context.lineTo(pos[0] + 50, pos[1] + 50);
+      context.moveTo(pos[0] + grid_width, pos[1]);
+      context.lineTo(pos[0] + grid_width, pos[1] + grid_width);
       context.stroke();
       context.closePath();
 
@@ -222,8 +217,8 @@ class Maze {
       } else {
         context.strokeStyle = '#000';
       }
-      context.moveTo(pos[0], pos[1] + 50);
-      context.lineTo(pos[0] + 50, pos[1] + 50);
+      context.moveTo(pos[0], pos[1] + grid_width);
+      context.lineTo(pos[0] + grid_width, pos[1] + grid_width);
       context.stroke();
       context.closePath();
 
@@ -235,7 +230,7 @@ class Maze {
         context.strokeStyle = '#000';
       }
       context.moveTo(pos[0], pos[1]);
-      context.lineTo(pos[0], pos[1] + 50);
+      context.lineTo(pos[0], pos[1] + grid_width);
       context.stroke();
       context.closePath();
     }
@@ -245,11 +240,11 @@ class Maze {
   getPos(index) {
     const row = Math.floor(index / this.width);
     const col = index - row * this.width;
-    return [col * 50, row * 50];
+    return [col * grid_width, row * grid_width];
   }
 }
 
 const maze = new Maze({
-  width: 10,
-  height: 10
+  width: 30,
+  height: 30
 });
