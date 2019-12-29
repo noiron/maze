@@ -10,7 +10,7 @@ function delay(ms) {
 }
 
 let count = 1;
-const grid_width = 25;
+const grid_width = 40;
 
 class Maze {
   constructor({ width, height }) {
@@ -72,7 +72,7 @@ class Maze {
         this.grids[next] = this.grids[next] | 4;
       }
 
-      await delay(10);
+      await delay(20);
       this.draw();
     }
 
@@ -83,38 +83,22 @@ class Maze {
   findNeighbor(pos, type) {
     // 上方
     if (type === 1) {
-      if (pos < this.width) {
-        return null;
-      } else {
-        return pos - this.width;
-      }
+      return pos < this.width ? null : pos - this.width;
     }
 
     // 右
     if (type === 2) {
-      if ((pos + 1) % this.width === 0) {
-        return null;
-      } else {
-        return pos + 1;
-      }
+      return ((pos + 1) % this.width === 0) ? null : pos + 1;
     }
 
     // 下
     if (type === 3) {
-      if (pos >= this.grids.length - this.width) {
-        return null;
-      } else {
-        return pos + this.width;
-      }
+      return (pos >= this.grids.length - this.width) ? null : pos + this.width;
     }
 
     // 左
     if (type === 4) {
-      if (pos % this.width === 0) {
-        return null;
-      } else {
-        return pos - 1;
-      }
+      return (pos % this.width === 0) ? null : pos - 1;
     }
   }
 
@@ -184,22 +168,20 @@ class Maze {
 
       const pos = this.getPos(i);
 
-      // 上方通行
+      // 上方可通行
       context.beginPath();
       if ((this.grids[i] & 1) === 1) {
         context.strokeStyle = '#fff';
       } else {
         context.strokeStyle = '#000';
       }
-
       context.moveTo(pos[0], pos[1]);
       context.lineTo(pos[0] + grid_width, pos[1]);
       context.stroke();
       context.closePath();
 
-      // 右
+      // 右侧可通行
       context.beginPath();
-      context.lineWidth = 2;
       if ((this.grids[i] & 2) === 2) {
         context.strokeStyle = '#fff';
       } else {
@@ -210,7 +192,7 @@ class Maze {
       context.stroke();
       context.closePath();
 
-      // 下
+      // 下侧可通行
       context.beginPath();
       if ((this.grids[i] & 4) === 4) {
         context.strokeStyle = '#fff';
@@ -222,7 +204,7 @@ class Maze {
       context.stroke();
       context.closePath();
 
-      // 左
+      // 左侧可通行
       context.beginPath();
       if ((this.grids[i] & 8) === 8) {
         context.strokeStyle = '#fff';
@@ -245,6 +227,6 @@ class Maze {
 }
 
 const maze = new Maze({
-  width: 30,
-  height: 30
+  width: 10,
+  height: 10
 });
