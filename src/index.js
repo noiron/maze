@@ -3,7 +3,7 @@ import * as utils from './utils';
 let count = 1;
 const grid_width = 40;
 
-class Maze {
+export default class Maze {
   constructor({ width, height }) {
     this.grids = [];
     this.width = width;
@@ -113,8 +113,8 @@ class Maze {
   draw(current) {
     const canvas = document.getElementById('drawing');
     const context = canvas.getContext('2d');
-    canvas.width = 1000;
-    canvas.height = 1000;
+    canvas.width = grid_width * this.width + 20;;
+    canvas.height = grid_width * this.height + 20;
     context.translate(10, 10);
 
     context.fillStyle = '#fff';
@@ -155,56 +155,38 @@ class Maze {
 
       const pos = this.getPos(i);
 
-      // 上方可通行
       context.beginPath();
-      if ((this.grids[i] & 1) === 1) {
-        context.strokeStyle = '#fff';
-      } else {
-        context.strokeStyle = '#000';
-      }
-      context.moveTo(pos[0], pos[1]);
-      context.lineTo(pos[0] + grid_width, pos[1]);
-      context.stroke();
-      context.closePath();
+      context.strokeStyle = '#333';
 
-      // 右侧可通行
-      context.beginPath();
-      if ((this.grids[i] & 2) === 2) {
-        context.strokeStyle = '#fff';
-      } else {
-        context.strokeStyle = '#000';
+      // 上方不可通行
+      if ((this.grids[i] & 1) !== 1) {
+        context.moveTo(pos[0], pos[1]);
+        context.lineTo(pos[0] + grid_width, pos[1]);
       }
-      context.moveTo(pos[0] + grid_width, pos[1]);
-      context.lineTo(pos[0] + grid_width, pos[1] + grid_width);
-      context.stroke();
-      context.closePath();
 
-      // 下侧可通行
-      context.beginPath();
-      if ((this.grids[i] & 4) === 4) {
-        context.strokeStyle = '#fff';
-      } else {
-        context.strokeStyle = '#000';
+      // 右侧不可通行
+      if ((this.grids[i] & 2) !== 2) {
+        context.moveTo(pos[0] + grid_width, pos[1]);
+        context.lineTo(pos[0] + grid_width, pos[1] + grid_width);
       }
-      context.moveTo(pos[0], pos[1] + grid_width);
-      context.lineTo(pos[0] + grid_width, pos[1] + grid_width);
-      context.stroke();
-      context.closePath();
 
-      // 左侧可通行
-      context.beginPath();
-      if ((this.grids[i] & 8) === 8) {
-        context.strokeStyle = '#fff';
-      } else {
-        context.strokeStyle = '#000';
+      // 下侧不可通行
+      if ((this.grids[i] & 4) !== 4) {
+        context.moveTo(pos[0], pos[1] + grid_width);
+        context.lineTo(pos[0] + grid_width, pos[1] + grid_width);
       }
-      context.moveTo(pos[0], pos[1]);
-      context.lineTo(pos[0], pos[1] + grid_width);
+
+      // 左侧不可通行
+      if ((this.grids[i] & 8) !== 8) {
+        context.moveTo(pos[0], pos[1]);
+        context.lineTo(pos[0], pos[1] + grid_width);
+      }
+
       context.stroke();
       context.closePath();
     }
 
-
+    // mark current grid
     context.fillStyle = 'red';
     context.fillRect(
       this.getPos(current)[0] - 1, 
