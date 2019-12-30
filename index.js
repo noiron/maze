@@ -27,53 +27,49 @@ class Maze {
 
   // 任意挑选一个点开始
   async walk() {
-    let startPos = getRandomInt(this.grids.length);
+    let current = getRandomInt(this.grids.length);
 
-    while (count < 100000 && this.visited.length <= this.grids.length) {
+    while (count < 10000 && this.visited.length <= this.grids.length) {
       count++;
 
-      let neighbors = this.findAllNeighbors(startPos);
-      if (neighbors.length === 0) {
-        startPos = getRandomInt(this.grids.length);
-        continue;
-      }
-
+      let neighbors = this.findAllNeighbors(current);
       const index = getRandomInt(neighbors.length);
       const next = neighbors[index];
 
       if (this.isVisited(next)) {
-        startPos = next;
+        current = next;
         continue;
       }
+
       this.visited.push(next);
 
       // 判断 start 和 next 的关系
-      if (startPos + 1 === next) {
+      if (current + 1 === next) {
         // 向右
-        this.grids[startPos] = this.grids[startPos] | 2;
+        this.grids[current] = this.grids[current] | 2;
         this.grids[next] = this.grids[next] | 8;
       }
 
-      if (startPos - 1 === next) {
+      if (current - 1 === next) {
         // 向左
-        this.grids[startPos] = this.grids[startPos] | 8;
+        this.grids[current] = this.grids[current] | 8;
         this.grids[next] = this.grids[next] | 2;
       }
 
-      if (startPos + this.width === next) {
+      if (current + this.width === next) {
         // 向下
-        this.grids[startPos] = this.grids[startPos] | 4;
+        this.grids[current] = this.grids[current] | 4;
         this.grids[next] = this.grids[next] | 1;
       }
 
-      if (startPos - this.width === next) {
+      if (current - this.width === next) {
         // 向下
-        this.grids[startPos] = this.grids[startPos] | 1;
+        this.grids[current] = this.grids[current] | 1;
         this.grids[next] = this.grids[next] | 4;
       }
 
-      await delay(20);
-      this.draw();
+      await delay(100);
+      this.draw(current);
     }
 
     console.log(this.grids);
@@ -123,7 +119,7 @@ class Maze {
   }
 
   // 画图
-  draw() {
+  draw(current) {
     const canvas = document.getElementById('drawing');
     const context = canvas.getContext('2d');
     canvas.width = 1000;
@@ -216,6 +212,16 @@ class Maze {
       context.stroke();
       context.closePath();
     }
+
+
+    context.fillStyle = 'red';
+    context.fillRect(
+      this.getPos(current)[0] - 1, 
+      this.getPos(current)[1] - 1, 
+      grid_width + 2, 
+      grid_width + 2
+    );
+
   }
 
   // 根据 index 确定左上角在 canvas 的位置
@@ -227,6 +233,6 @@ class Maze {
 }
 
 const maze = new Maze({
-  width: 10,
-  height: 10
+  width: 16,
+  height: 16
 });
