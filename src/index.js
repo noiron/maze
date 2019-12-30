@@ -1,13 +1,4 @@
-/**
- * 获取一个从 0 ~ max-1 的整数
- */
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
-
-function delay(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+import * as utils from './utils';
 
 let count = 1;
 const grid_width = 40;
@@ -27,13 +18,13 @@ class Maze {
 
   // 任意挑选一个点开始
   async walk() {
-    let current = getRandomInt(this.grids.length);
+    let current = utils.getRandomInt(this.grids.length);
 
     while (count < 10000 && this.visited.length <= this.grids.length) {
       count++;
 
       let neighbors = this.findAllNeighbors(current);
-      const index = getRandomInt(neighbors.length);
+      const index = utils.getRandomInt(neighbors.length);
       const next = neighbors[index];
 
       if (this.isVisited(next)) {
@@ -68,7 +59,7 @@ class Maze {
         this.grids[next] = this.grids[next] | 4;
       }
 
-      await delay(100);
+      await utils.delay(100);
       this.draw(current);
     }
 
