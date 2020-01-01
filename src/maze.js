@@ -1,7 +1,6 @@
 import * as utils from './utils';
 
-let count = 1;
-const grid_width = 40;
+const grid_width = 30;
 
 export default class Maze {
   constructor({ width, height }) {
@@ -13,15 +12,15 @@ export default class Maze {
     this.history = [];
     this.visited = [];
 
-    this.walk();
+    this.count = 1;
   }
 
   // 任意挑选一个点开始
   async walk() {
     let current = utils.getRandomInt(this.grids.length);
 
-    while (count < 10000 && this.visited.length <= this.grids.length) {
-      count++;
+    while (this.count < 10000 && this.visited.length <= this.grids.length) {
+      this.count++;
 
       let neighbors = this.findAllNeighbors(current);
       const index = utils.getRandomInt(neighbors.length);
