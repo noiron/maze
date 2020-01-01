@@ -1,12 +1,11 @@
 import * as utils from './utils';
 
-const grid_width = 30;
-
 export default class Maze {
-  constructor({ width, height }) {
+  constructor({ width, height, gridSize }) {
     this.grids = [];
     this.width = width;
     this.height = height;
+    this.gridSize = gridSize;
     this.grids[width * height - 1] = 0;
 
     this.history = [];
@@ -19,7 +18,7 @@ export default class Maze {
   async walk() {
     let current = utils.getRandomInt(this.grids.length);
 
-    while (this.count < 10000 && this.visited.length <= this.grids.length) {
+    while (this.count < 1000000 && this.visited.length <= this.grids.length) {
       this.count++;
 
       let neighbors = this.findAllNeighbors(current);
@@ -112,8 +111,8 @@ export default class Maze {
   draw(current) {
     const canvas = document.getElementById('drawing');
     const context = canvas.getContext('2d');
-    canvas.width = grid_width * this.width + 20;;
-    canvas.height = grid_width * this.height + 20;
+    canvas.width = this.gridSize * this.width + 20;;
+    canvas.height = this.gridSize * this.height + 20;
     context.translate(10, 10);
 
     context.fillStyle = '#fff';
@@ -125,27 +124,27 @@ export default class Maze {
 
     // 横线
     // for (let i = 0; i <= this.height; i++) {
-    //   context.moveTo(0, i * grid_width);
-    //   context.lineTo(this.width * grid_width, i * grid_width);
+    //   context.moveTo(0, i * this.gridSize);
+    //   context.lineTo(this.width * this.gridSize, i * this.gridSize);
     // }
 
-    context.moveTo(0, 0 * grid_width);
-    context.lineTo(this.width * grid_width, 0 * grid_width);
+    context.moveTo(0, 0 * this.gridSize);
+    context.lineTo(this.width * this.gridSize, 0 * this.gridSize);
 
-    context.moveTo(0, this.height * grid_width);
-    context.lineTo(this.width * grid_width, this.height * grid_width);
+    context.moveTo(0, this.height * this.gridSize);
+    context.lineTo(this.width * this.gridSize, this.height * this.gridSize);
 
     // // 纵线
     // for (let i = 0; i <= this.width; i++) {
-    //   context.moveTo(i * grid_width, 0);
-    //   context.lineTo(i* grid_width, this.height * grid_width);
+    //   context.moveTo(i * this.gridSize, 0);
+    //   context.lineTo(i* this.gridSize, this.height * this.gridSize);
     // }
 
-    context.moveTo(0 * grid_width, 0);
-    context.lineTo(0 * grid_width, this.height * grid_width);
+    context.moveTo(0 * this.gridSize, 0);
+    context.lineTo(0 * this.gridSize, this.height * this.gridSize);
 
-    context.moveTo(this.width * grid_width, 0);
-    context.lineTo(this.width * grid_width, this.height * grid_width);
+    context.moveTo(this.width * this.gridSize, 0);
+    context.lineTo(this.width * this.gridSize, this.height * this.gridSize);
 
     context.stroke();
     context.closePath();
@@ -160,25 +159,25 @@ export default class Maze {
       // 上方不可通行
       if ((this.grids[i] & 1) !== 1) {
         context.moveTo(pos[0], pos[1]);
-        context.lineTo(pos[0] + grid_width, pos[1]);
+        context.lineTo(pos[0] + this.gridSize, pos[1]);
       }
 
       // 右侧不可通行
       if ((this.grids[i] & 2) !== 2) {
-        context.moveTo(pos[0] + grid_width, pos[1]);
-        context.lineTo(pos[0] + grid_width, pos[1] + grid_width);
+        context.moveTo(pos[0] + this.gridSize, pos[1]);
+        context.lineTo(pos[0] + this.gridSize, pos[1] + this.gridSize);
       }
 
       // 下侧不可通行
       if ((this.grids[i] & 4) !== 4) {
-        context.moveTo(pos[0], pos[1] + grid_width);
-        context.lineTo(pos[0] + grid_width, pos[1] + grid_width);
+        context.moveTo(pos[0], pos[1] + this.gridSize);
+        context.lineTo(pos[0] + this.gridSize, pos[1] + this.gridSize);
       }
 
       // 左侧不可通行
       if ((this.grids[i] & 8) !== 8) {
         context.moveTo(pos[0], pos[1]);
-        context.lineTo(pos[0], pos[1] + grid_width);
+        context.lineTo(pos[0], pos[1] + this.gridSize);
       }
 
       context.stroke();
@@ -190,8 +189,8 @@ export default class Maze {
     context.fillRect(
       this.getPos(current)[0] - 1, 
       this.getPos(current)[1] - 1, 
-      grid_width + 2, 
-      grid_width + 2
+      this.gridSize + 2, 
+      this.gridSize + 2
     );
 
   }
@@ -200,6 +199,6 @@ export default class Maze {
   getPos(index) {
     const row = Math.floor(index / this.width);
     const col = index - row * this.width;
-    return [col * grid_width, row * grid_width];
+    return [col * this.gridSize, row * this.gridSize];
   }
 }
