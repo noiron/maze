@@ -1,4 +1,7 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
 import Maze from './maze';
+import Component from './component';
 
 const init_width = 10;
 const init_height = 10;
@@ -35,3 +38,9 @@ const maze = new Maze({
   gridSize: 40,
 });
 maze.walk();
+
+
+ReactDOM.render(
+  <Component />,
+  document.getElementById('root'),
+);
