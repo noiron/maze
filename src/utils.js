@@ -13,7 +13,7 @@ export function delay(ms) {
  * 绘制迷宫的函数
  */
 export function draw({
-  width, height, gridSize, current, grids
+  width, height, gridSize, current, grids, isFinish,
 }) {
   const canvas = document.getElementById('drawing');
   const context = canvas.getContext('2d');
@@ -86,11 +86,13 @@ export function draw({
   }
 
   // mark current grid
-  context.fillStyle = 'lightgreen';
-  context.fillRect(
-    getPos(current)[0] - 1, 
-    getPos(current)[1] - 1, 
-    gridSize + 2, 
-    gridSize + 2
-  );
+  if (!isFinish && current) {
+    context.fillStyle = 'lightgreen';
+    context.fillRect(
+      getPos(current)[0] - 1, 
+      getPos(current)[1] - 1, 
+      gridSize + 2, 
+      gridSize + 2
+    );
+  }
 }

@@ -12,6 +12,7 @@ export default class Maze {
     this.visited = [];
 
     this.count = 1;
+    this.finish = false;
   }
 
   // 任意挑选一个点开始
@@ -58,16 +59,12 @@ export default class Maze {
       }
 
       await utils.delay(10);
-      utils.draw({
-        width: this.width,
-        height: this.height,
-        grids: this.grids,
-        gridSize: this.gridSize,
-        current,
-      });
+      this.draw(current);
     }
 
     console.log(this.grids);
+    this.finish = true;
+    this.draw();
   }
 
   // 确定一个点在四个方向上相邻的点
@@ -111,6 +108,17 @@ export default class Maze {
   isVisited(pos) {
     if (this.visited.indexOf(pos) > -1) return true;
     return false;
+  }
+
+  draw(current) {
+    utils.draw({
+      width: this.width,
+      height: this.height,
+      grids: this.grids,
+      gridSize: this.gridSize,
+      current,
+      isFinish: this.finish,
+    });
   }
 
 }
