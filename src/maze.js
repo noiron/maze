@@ -58,7 +58,13 @@ export default class Maze {
       }
 
       await utils.delay(10);
-      this.draw(current);
+      utils.draw({
+        width: this.width,
+        height: this.height,
+        grids: this.grids,
+        gridSize: this.gridSize,
+        current,
+      });
     }
 
     console.log(this.grids);
@@ -107,98 +113,4 @@ export default class Maze {
     return false;
   }
 
-  // 画图
-  draw(current) {
-    const canvas = document.getElementById('drawing');
-    const context = canvas.getContext('2d');
-    canvas.width = this.gridSize * this.width + 20;;
-    canvas.height = this.gridSize * this.height + 20;
-    context.translate(10, 10);
-
-    context.fillStyle = '#fff';
-    context.fillRect(0, 0, canvas.width, canvas.height);
-
-    context.beginPath();
-    context.lineWidth = 2;
-    context.strokeStyle = '#000';
-
-    // 横线
-    // for (let i = 0; i <= this.height; i++) {
-    //   context.moveTo(0, i * this.gridSize);
-    //   context.lineTo(this.width * this.gridSize, i * this.gridSize);
-    // }
-
-    context.moveTo(0, 0 * this.gridSize);
-    context.lineTo(this.width * this.gridSize, 0 * this.gridSize);
-
-    context.moveTo(0, this.height * this.gridSize);
-    context.lineTo(this.width * this.gridSize, this.height * this.gridSize);
-
-    // // 纵线
-    // for (let i = 0; i <= this.width; i++) {
-    //   context.moveTo(i * this.gridSize, 0);
-    //   context.lineTo(i* this.gridSize, this.height * this.gridSize);
-    // }
-
-    context.moveTo(0 * this.gridSize, 0);
-    context.lineTo(0 * this.gridSize, this.height * this.gridSize);
-
-    context.moveTo(this.width * this.gridSize, 0);
-    context.lineTo(this.width * this.gridSize, this.height * this.gridSize);
-
-    context.stroke();
-    context.closePath();
-
-    for (let i = 0; i < this.grids.length; i++) {
-
-      const pos = this.getPos(i);
-
-      context.beginPath();
-      context.strokeStyle = '#333';
-
-      // 上方不可通行
-      if ((this.grids[i] & 1) !== 1) {
-        context.moveTo(pos[0], pos[1]);
-        context.lineTo(pos[0] + this.gridSize, pos[1]);
-      }
-
-      // 右侧不可通行
-      if ((this.grids[i] & 2) !== 2) {
-        context.moveTo(pos[0] + this.gridSize, pos[1]);
-        context.lineTo(pos[0] + this.gridSize, pos[1] + this.gridSize);
-      }
-
-      // 下侧不可通行
-      if ((this.grids[i] & 4) !== 4) {
-        context.moveTo(pos[0], pos[1] + this.gridSize);
-        context.lineTo(pos[0] + this.gridSize, pos[1] + this.gridSize);
-      }
-
-      // 左侧不可通行
-      if ((this.grids[i] & 8) !== 8) {
-        context.moveTo(pos[0], pos[1]);
-        context.lineTo(pos[0], pos[1] + this.gridSize);
-      }
-
-      context.stroke();
-      context.closePath();
-    }
-
-    // mark current grid
-    context.fillStyle = 'lightgreen';
-    context.fillRect(
-      this.getPos(current)[0] - 1, 
-      this.getPos(current)[1] - 1, 
-      this.gridSize + 2, 
-      this.gridSize + 2
-    );
-
-  }
-
-  // 根据 index 确定左上角在 canvas 的位置
-  getPos(index) {
-    const row = Math.floor(index / this.width);
-    const col = index - row * this.width;
-    return [col * this.gridSize, row * this.gridSize];
-  }
 }
