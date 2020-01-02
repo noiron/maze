@@ -18,7 +18,7 @@ export default class Maze {
   async walk() {
     let current = utils.getRandomInt(this.grids.length);
 
-    while (this.count < 1000000 && this.visited.length <= this.grids.length) {
+    while (this.count < 10000000 && this.visited.length <= this.grids.length) {
       this.count++;
 
       let neighbors = this.findAllNeighbors(current);
@@ -57,7 +57,7 @@ export default class Maze {
         this.grids[next] = this.grids[next] | 4;
       }
 
-      await utils.delay(100);
+      await utils.delay(10);
       this.draw(current);
     }
 
@@ -116,7 +116,7 @@ export default class Maze {
     context.translate(10, 10);
 
     context.fillStyle = '#fff';
-    context.fillRect(0, 0, 1000, 1000);
+    context.fillRect(0, 0, canvas.width, canvas.height);
 
     context.beginPath();
     context.lineWidth = 2;
@@ -185,7 +185,7 @@ export default class Maze {
     }
 
     // mark current grid
-    context.fillStyle = 'red';
+    context.fillStyle = 'lightgreen';
     context.fillRect(
       this.getPos(current)[0] - 1, 
       this.getPos(current)[1] - 1, 
