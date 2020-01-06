@@ -16,6 +16,7 @@ const App = () => {
   const [width, setWidth] = useState(10);
   const [height, setHeight] = useState(10);
   const [size, setSize] = useState(30);
+  const [showAnimation, setShowAnimation] = useState(true);
 
 
   function createMaze() {
@@ -24,6 +25,7 @@ const App = () => {
       width,
       height,
       gridSize: size,
+      showAnimation,
     });
     maze.walk();
   }
@@ -41,6 +43,8 @@ const App = () => {
         setHeight={setHeight}
         size={size}
         setSize={setSize}
+        showAnimation={showAnimation}
+        setShowAnimation={setShowAnimation}
       />
 
       <Button onClick={createMaze}>生成迷宫</Button>

@@ -1,12 +1,13 @@
 import * as utils from './utils';
 
 export default class Maze {
-  constructor({ width, height, gridSize }) {
+  constructor({ width, height, gridSize, showAnimation }) {
     this.grids = [];
     this.width = width;
     this.height = height;
     this.gridSize = gridSize;
     this.grids[width * height - 1] = 0;
+    this.showAnimation = showAnimation;
 
     this.history = [];
     this.visited = [];
@@ -58,8 +59,10 @@ export default class Maze {
         this.grids[next] = this.grids[next] | 4;
       }
 
-      await utils.delay(10);
-      this.draw(current);
+      if (this.showAnimation) {
+        await utils.delay(10);
+        this.draw(current);
+      }
     }
 
     console.log(this.grids);
