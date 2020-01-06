@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import Panel from './components/panel';
 import Maze from './maze';
+
+const Button = styled.button`
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-top: 5px;
+`;
+
 
 const App = () => {
 
@@ -34,7 +43,7 @@ const App = () => {
         setSize={setSize}
       />
 
-      <button onClick={createMaze}>生成新的迷宫</button>
+      <Button onClick={createMaze}>生成迷宫</Button>
     </div>
   );
 };
