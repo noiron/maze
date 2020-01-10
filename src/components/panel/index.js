@@ -8,6 +8,10 @@ const Panel = (props) => {
     props.setSpeed(+e.target.value);
   }
 
+  function handleClickRadio(e) {
+    props.setAlgo(e.target.value);
+  }
+
   return (
     <div>
 
@@ -30,6 +34,20 @@ const Panel = (props) => {
             onChange={handleSpeed}
           ></input>
         </span>
+      </div>
+
+      <div>
+        <span>生成算法：</span>
+        <input type="radio" name="random" value="random" 
+          checked={props.algo === 'random'}
+          onChange={handleClickRadio}
+        />
+        <label htmlFor="random" style={{marginRight: 5}}>random</label>
+
+        <input type="radio" name="dfs" value="dfs" checked={props.algo === 'dfs'} 
+          onChange={handleClickRadio}
+        />
+        <label htmlFor="dfs">dfs</label>
       </div>
 
     </div>
