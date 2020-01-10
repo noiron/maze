@@ -1,6 +1,21 @@
 import React from 'react';
+import styled from 'styled-components';
 import Input from '../input';
 import Checkbox from '../checkbox';
+
+
+const Box = styled.div`
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  max-width: 500px;
+  padding: 10px;
+  font-size: 16px;
+
+  .row {
+    margin-bottom: 5px;
+  }
+`;
+
 
 const Panel = (props) => {
 
@@ -13,15 +28,15 @@ const Panel = (props) => {
   }
 
   return (
-    <div>
+    <Box>
 
-      <div>
+      <div className="row">
         <Input label="迷宫宽度：" onChange={props.setWidth} value={props.width} />
         <Input label="迷宫高度：" onChange={props.setHeight} value={props.height} />
         <Input label="格子大小：" onChange={props.setSize} value={props.size} />
       </div>
 
-      <div>
+      <div className="row">
         <Checkbox label="是否显示动画"
           checked={props.showAnimation}
           onChange={props.setShowAnimation}
@@ -36,7 +51,7 @@ const Panel = (props) => {
         </span>
       </div>
 
-      <div>
+      <div className="row">
         <span>生成算法：</span>
         <input type="radio" name="random" value="random" 
           checked={props.algo === 'random'}
@@ -50,7 +65,7 @@ const Panel = (props) => {
         <label htmlFor="dfs">dfs</label>
       </div>
 
-    </div>
+    </Box>
   );
 };
 
