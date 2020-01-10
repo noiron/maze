@@ -28,12 +28,10 @@ const App = () => {
   const [height, setHeight] = useState(20);
   const [size, setSize] = useState(20);
   const [showAnimation, setShowAnimation] = useState(true);
-  const [algo, setAlgo] = useState('random'); // 选择生成迷宫的算法
+  const [algo, setAlgo] = useState('dfs'); // 选择生成迷宫的算法
 
   // 控制动画的速度，1 ~ 100，对应 delay 为 0 ~ 1000
   const [speed, setSpeed] = useState(100);
-
-
 
   function createMaze() {
 

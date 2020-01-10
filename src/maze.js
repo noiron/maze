@@ -34,31 +34,7 @@ export default class Maze {
       }
 
       this.visited.push(next);
-
-      // 判断 start 和 next 的关系
-      if (current + 1 === next) {
-        // 向右
-        this.grids[current] = this.grids[current] | 2;
-        this.grids[next] = this.grids[next] | 8;
-      }
-
-      if (current - 1 === next) {
-        // 向左
-        this.grids[current] = this.grids[current] | 8;
-        this.grids[next] = this.grids[next] | 2;
-      }
-
-      if (current + this.width === next) {
-        // 向下
-        this.grids[current] = this.grids[current] | 4;
-        this.grids[next] = this.grids[next] | 1;
-      }
-
-      if (current - this.width === next) {
-        // 向下
-        this.grids[current] = this.grids[current] | 1;
-        this.grids[next] = this.grids[next] | 4;
-      }
+      this.mark(current, next);
 
       if (this.showAnimation) {
         await utils.delay(this.delayMs);
@@ -112,6 +88,33 @@ export default class Maze {
   isVisited(pos) {
     if (this.visited.indexOf(pos) > -1) return true;
     return false;
+  }
+
+  // 判断 start 和 next 的关系
+  mark(current, next) {
+    if (current + 1 === next) {
+      // 向右
+      this.grids[current] = this.grids[current] | 2;
+      this.grids[next] = this.grids[next] | 8;
+    }
+
+    if (current - 1 === next) {
+      // 向左
+      this.grids[current] = this.grids[current] | 8;
+      this.grids[next] = this.grids[next] | 2;
+    }
+
+    if (current + this.width === next) {
+      // 向下
+      this.grids[current] = this.grids[current] | 4;
+      this.grids[next] = this.grids[next] | 1;
+    }
+
+    if (current - this.width === next) {
+      // 向下
+      this.grids[current] = this.grids[current] | 1;
+      this.grids[next] = this.grids[next] | 4;
+    }
   }
 
   draw(current) {
