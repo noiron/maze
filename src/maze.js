@@ -1,7 +1,7 @@
 import * as utils from './utils';
 
 export default class Maze {
-  constructor({ width, height, gridSize, showAnimation, delayMs }) {
+  constructor({ width, height, gridSize, showAnimation, delayMs, finishNotice }) {
     this.grids = [];
     this.width = width;
     this.height = height;
@@ -15,6 +15,7 @@ export default class Maze {
 
     this.count = 1;
     this.finish = false;
+    this.finishNotice = finishNotice;
   }
 
   // 任意挑选一个点开始
@@ -42,8 +43,8 @@ export default class Maze {
       }
     }
 
-    console.log(this.grids);
     this.finish = true;
+    if ((typeof (this.finishNotice)) === 'function') this.finishNotice();
     this.draw();
   }
 

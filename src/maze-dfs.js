@@ -54,6 +54,8 @@ class MazeDFS extends Maze {
     } while(true && this.count < 300000);
 
     this.finish = true;
+    if ((typeof (this.finishNotice)) === 'function') this.finishNotice();
+
     this.draw();
   }
 }
