@@ -100,4 +100,4 @@ function e(o){return module.exports=e=Object.setPrototypeOf?Object.getPrototypeO
 },{"@babel/runtime/helpers/asyncToGenerator":"fwsn","@babel/runtime/helpers/slicedToArray":"xw6J","@babel/runtime/helpers/taggedTemplateLiteral":"IObo","@babel/runtime/regenerator":"m4eR","react":"HdMw","styled-components":"OuUI","./components/panel":"yibG","./maze":"o3pi","./maze-dfs":"ojj2","./utils":"K0yk"}],"H99C":[function(require,module,exports) {
 "use strict";var e=u(require("react")),r=u(require("react-dom")),t=u(require("./App"));function u(e){return e&&e.__esModule?e:{default:e}}r.default.render(e.default.createElement(t.default,null),document.getElementById("root"));
 },{"react":"HdMw","react-dom":"X9zx","./App":"FLHj"}]},{},["H99C"], null)
-//# sourceMappingURL=/src.80c2f362.js.map
+//# sourceMappingURL=maze/src.80c2f362.js.map
