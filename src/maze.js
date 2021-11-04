@@ -87,8 +87,7 @@ export default class Maze {
 
   // 检查一个点是否已经经过
   isVisited(pos) {
-    if (this.visited.indexOf(pos) > -1) return true;
-    return false;
+    return this.visited.indexOf(pos) > -1;
   }
 
   // 判断 start 和 next 的关系
