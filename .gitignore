@@ -1,3 +1,44 @@
-.cache
-dist
+# Dependencies
 node_modules
+
+# Build outputs
+dist
+.cache
+
+# Parcel
+.parcel-cache
+
+# Package managers
+.yarn
+yarn.lock
+
+# Claude Code
+.claude
+
+# Editor
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode
+.idea
+*.sublime-*
+.spyderproject
+.spyproject
+
+# OS
+Thumbs.db
